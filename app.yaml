@@ -1,0 +1,28 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+
+handlers:
+- url: /favicon
+  static_dir: favicon
+- url: /assets-custom
+  static_dir: html5up-big-picture/assets
+- url: /assets
+  static_dir: assets
+- url: /js
+  static_dir: html5up-big-picture/assets/js
+- url: /images
+  static_dir: html5up-big-picture/assets/css/images
+- url: /css
+  static_dir: css
+- url: /images
+  static_dir: html5up-big-picture/assets/images
+- url: /.*
+  script: main.app
+
+libraries:
+- name: jinja2
+  version: latest
+- name: webapp2
+  version: "2.5.2"

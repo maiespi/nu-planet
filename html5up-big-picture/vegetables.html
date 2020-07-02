@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <script src="/js/NuPlanet.js"></script>
+    <meta charset="utf-8">
+    <title>Water Footprint</title>
+    <link rel="stylesheet" href="/assets-custom/css/main.css" />
+    <link rel="icon" href="favicon/earth.png" type="favicon/earth.png" />
+  </head>
+  <body>
+    <div id="head1"><h2> NuPlanet  |  Water Footprint</h2></div>
+    <section id="one" class="main style2 center dark fullscreen">
+      <div class="content box style2">
+      <a href= "/user">
+          Go Back
+        </a>
+        <p></p>
+        <br/>
+
+    <form id method="POST">
+      <label for="food">Choose a vegetable:</label>
+      <select name="user_vegetable">
+        <option value="corn">Corn</option>
+        <option value="avocado">Avocado</option>
+        <option value="tomato">Tomato</option>
+        <option value="eggplant">Eggplant</option>
+        <option value="atrichokes">Artichokes</option>
+        <option value="cucumbers">Cucumbers</option>
+        <option value="lettuce">Lettuce</option></select>
+        <p></p>
+      <div class = "amount">
+        Enter an amount in lbs:<input name="amount" />
+        <br/>
+        <br/>
+        <br/>
+      <input type="submit" name="button" action ="/veggies">
+      </div>
+    </form>
+  </body>
+</html>

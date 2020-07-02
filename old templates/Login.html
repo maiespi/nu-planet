@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="603679654964-3srgriljsc2pi96qjjmacjh4lqp37eub.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <title></title>
+  </head>
+  <body>
+    <div class="box1">
+      <h1 id= "header1"></h1>
+    </div>
+    <div class="box2">
+      <div id="sign_in" class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <script>
+      function onSignIn(googleUser) {
+          var profile = googleUser.getBasicProfile();
+          console.log("ID: " + profile.getId());
+          console.log('Full Name: ' + profile.getName());
+          console.log('Given Name: ' + profile.getGivenName());
+          console.log("Image URL: " + profile.getImageUrl());
+          console.log("Email: " + profile.getEmail());
+          var id_token = googleUser.getAuthResponse().id_token;
+          console.log("ID Token: " + id_token);
+          document.getElementById('user').innerText = "Welcome to NuPlanet, " + profile.getGivenName() + "!";
+        }
+  </script>
+  </body>
+</html>

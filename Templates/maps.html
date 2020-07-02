@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 80%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 5px;
+        padding: 50px;
+      }
+    </style>
+    <!-- <script src ="https://maps.googleapis.com/maps/api/js"></script> -->
+  <!-- <script src ="../JavaScript/Main.js"></script> -->
+  </head>
+  <body>
+    <div id="map"></div>
+      <input type ="text" id ="search" placeholder = "search here"><br/>
+      <button id="searchButton">Search</button><br/>
+    </input>
+    <script>
+     let user_input = document.getElementById("search");
+     console.log(user_input.value)
+      let searchButton = document.getElementById("searchButton");
+      searchButton.addEventListener("click", onClick );
+
+    function onClick(){
+      console.log(user_input.value)
+      make_location("Brussels", 40.001, -36.88)
+    }
+      function initMap() {
+        var chicago = new google.maps.LatLng(42.850, -87.650);
+        var seattle = new google.maps.LatLng(47.6062, -122.3321);
+        var center_us = new google.maps.LatLng(39.8283, -98.5795);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: center_us,
+          zoom: 4
+        });
+
+        // Chicago Info Window
+        var coordInfoWindowChicago = new google.maps.InfoWindow();
+        coordInfoWindowChicago.setContent(createInfoWindowContent(user_input, chicago, map.getZoom()));
+        coordInfoWindowChicago.setPosition(chicago);
+        coordInfoWindowChicago.open(map);
+        // Seattle Info Wndow
+        var coordInfoWindowSeattle = new google.maps.InfoWindow();
+        coordInfoWindowSeattle.setContent(createInfoWindowContent(user_input, seattle, map.getZoom()));
+        coordInfoWindowSeattle.setPosition(seattle);
+        coordInfoWindowSeattle.open(map);
+
+
+        map.addListener('zoom_changed', function() {
+          coordInfoWindowChicago.setContent(createInfoWindowContent(user_input, chicago, map.getZoom()));
+          coordInfoWindowChicago.open(map);
+          coordInfoWindowSeattle.setContent(createInfoWindowContent(user_input, seattle, map.getZoom()));
+          coordInfoWindowSeattle.open(map);
+        });
+      }
+      function make_location (name, Lat, Lng) {
+        this.name = name;
+        this.Lat = Lat;
+        this.Lng = Lng;
+        this.point = new google.maps.LatLng(Lat, Lng);
+        coordInfoWindow = new google.maps.InfoWindow();
+        coordInfoWindow.setContent(createInfoWindowContent(name, point, map.getZoom()));
+        coordInfoWindow.setPosition(point);
+
+
+        console.log(self.name);
+        console.log(self.Lat);
+        console.log(self.point);
+        }
+
+
+      var TILE_SIZE = 2000;
+
+      function createInfoWindowContent(placeName, latLng, zoom) {
+        var scale = 1 << zoom;
+
+        var worldCoordinate = project(latLng);
+
+        return [
+          placeName,
+          'LatLng: ' + latLng ,
+          'Zoom level: ' + zoom,
+          'Coordinates: ' + worldCoordinate,
+        ].join('<br>');
+
+      }
+
+      // The mapping between latitude, longitude and pixels is defined by the web
+      // mercator projection.
+      function project(latLng) {
+        var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+        // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+        // about a third of a tile past the edge of the world tile.
+        siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+        return new google.maps.Point(
+            TILE_SIZE * (0.5 + latLng.lng() / 360),
+            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+      }
+    </script>
+
+    <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQw6VVsR22oM5DCilaaXDEk5VOQKnLq9w&callback=initMap">
+   </script>
+  </body>
+</html>
